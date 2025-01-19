@@ -63,7 +63,7 @@ const ChatSection = ({diagnosis}) => {
   return (
     <div className={styles.chatContainer}>
       <div className={styles.chatHeader}>
-        <h3>Chat with Gerry</h3>
+        <h3>Rant to Gerry</h3>
       </div>
 
       <div className={styles.messagesContainer}>

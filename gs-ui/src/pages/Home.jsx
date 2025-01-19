@@ -30,14 +30,14 @@ export default function Home() {
 
           <div className={styles["action-buttons"]}>
             <button className={styles["cta-button"]} onClick={handleStartForm}>
-              Get tested today
+              Get a Gut Check
             </button>
 
             <button 
               className={styles["chat-button"]}
               onClick={() => document.getElementById('chat-section').scrollIntoView({ behavior: 'smooth' })}
             >
-              Chat with Gerry
+              Rant to Gerry
             </button>
           </div>
         </main>
