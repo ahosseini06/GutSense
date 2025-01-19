@@ -3,13 +3,15 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DiagnosisForm from "./pages/DiagnosisForm";
 import DiagnosisResult from "./pages/DiagnosisResult";
 import "./styles.css";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <Router>
-      <div className="app-container">
+      <div>
         <Routes>
-          <Route path="/" element={<DiagnosisForm />} />
+        <Route path="/" element={<Home />} />
+          <Route path="/form" element={<DiagnosisForm />} />
           <Route path="/diagnosis" element={<DiagnosisResult />} />
         </Routes>
       </div>
