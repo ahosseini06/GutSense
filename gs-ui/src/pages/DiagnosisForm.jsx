@@ -11,6 +11,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
 import Navbar from "../components/navbar/Navbar";
 import Error from "../components/error/Error";
+import Loading from "../components/loading/Loading";
 
 function DiagnosisForm() {
   const navigate = useNavigate();
@@ -147,7 +148,7 @@ function DiagnosisForm() {
           </div>
         </div>
       )}
-      {loading && !QUESTIONS.error && <div>Loading...</div>}
+      {loading && !QUESTIONS.error && <Loading/>}
     </>
   );
 }
