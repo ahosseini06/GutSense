@@ -9,6 +9,7 @@ function DiagnosisResult() {
   // The diagnosis data is passed via state from the DiagnosisForm component
   const result = location.state;
   const diagnosis = result ? result.data: null;
+  const pastResults = localStorage.getItem("past-results") ? JSON.stringify(localStorage.getItem("past-results")) : null;
 
   // If there is no data in state, you might want to redirect back or show an error
   if (!diagnosis) {
@@ -16,6 +17,7 @@ function DiagnosisResult() {
       <div className="result-container">
         <h2>No diagnosis data found.</h2>
         <button onClick={() => navigate("/")}>Go Back</button>
+        {pastResults && pastResults[0] && <button onClick={() => navigate("/past-results")}>View Past Results</button>}
       </div>
     );
   }

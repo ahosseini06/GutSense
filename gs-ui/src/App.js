@@ -4,6 +4,7 @@ import DiagnosisForm from "./pages/DiagnosisForm";
 import DiagnosisResult from "./pages/DiagnosisResult";
 import "./styles.css";
 import Home from "./pages/Home";
+import PastResults from "./pages/PastResults";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
           <Route path="/form" element={<DiagnosisForm />} />
           <Route path="/diagnosis" element={<DiagnosisResult />} />
+          <Route path="/past-results" element={<PastResults />} />
         </Routes>
       </div>
     </Router>

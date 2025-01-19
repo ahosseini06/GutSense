@@ -56,7 +56,8 @@ function DiagnosisForm() {
 
       const data = response;
       // Navigate to the diagnosis page with the response in state
-      localStorage.setItem("diagnosis", JSON.stringify(data));
+      const pastResults = localStorage.getItem("past-results");
+      localStorage.setItem("past-results", JSON.stringify([...(pastResults ? JSON.parse(pastResults) : []), data]));
       navigate("/diagnosis", { state: data });
     } catch (error) {
       console.error("Error fetching diagnosis:", error);
