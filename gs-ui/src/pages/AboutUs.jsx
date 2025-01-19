@@ -1,6 +1,6 @@
 // Home.jsx simplified
 import React from "react";
-import styles from "./styles/About.module.css";
+import styles from "./styles/about.module.css";
 import Navbar from "../components/navbar/Navbar";
 import { useNavigate } from "react-router";
 
