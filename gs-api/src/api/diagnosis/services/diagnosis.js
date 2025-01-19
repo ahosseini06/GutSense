@@ -25,6 +25,6 @@ module.exports = createCoreService('api::diagnosis.diagnosis', ({ strapi }) => (
         });
     
         // Join all statements into a single paragraph
-        return filledStatements.join(" ");
+        return filledStatements.join("\n");
     }
 }));
