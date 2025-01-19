@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import DiagnosisForm from "./DiagnosisForm";
-import DiagnosisResult from "./DiagnosisResult";
+import DiagnosisForm from "./pages/DiagnosisForm";
+import DiagnosisResult from "./pages/DiagnosisResult";
 import "./styles.css";
 
 function App() {
