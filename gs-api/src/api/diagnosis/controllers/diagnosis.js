@@ -18,7 +18,7 @@ module.exports = createCoreController('api::diagnosis.diagnosis', ({ strapi }) =
 
         console.log(prompt)
 
-        const genAI = new GoogleGenerativeAI('AIzaSyBkKdRgpA7uEWiB9JDlY0KSLKsQPQmN4Dw');
+        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({ 
             model: "gemini-1.5-flash",
             generationConfig: {
