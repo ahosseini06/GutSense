@@ -47,7 +47,7 @@ function DiagnosisResult() {
                 className={styles.viewBtn}
                 onClick={() => navigate("/form")}
               >
-                Take a Diagnastic Test
+                Take a Diagnostic Test
               </button>
             </>
           )}
