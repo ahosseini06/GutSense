@@ -1,13 +1,7 @@
 import React, { useEffect } from "react";
 import styles from "./question.module.css";
 
-const Question = ({
-  setGlobalResponse,
-  question,
-  getAnswers,
-  setCurrentQuestion,
-  prevInput,
-}) => {
+const Question = ({ setGlobalResponse, question, getAnswers }) => {
   const [selected, setSelected] = React.useState(
     getAnswers.filter((answer) => answer.questionId === question.id)[0]?.answer
   );
@@ -49,9 +43,12 @@ const Question = ({
     <div className={styles.container}>
       <div className={styles.question}>
         {question.text}
-        {multiSelect && "Select all that apply"}
+        {multiSelect && (
+          <span style={{ fontWeight: "300" }}>
+            {" (Select all that apply)"}
+          </span>
+        )}
       </div>
-      {multiSelect && "Select all that apply"}
       <div className={styles.options}>
         {question.options.map((option, index) => (
           <div
