@@ -6,7 +6,7 @@
 
 const { createCoreController } = require('@strapi/strapi').factories;
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const { QUESTIONS, diagnosisSchema } = require("../../../constants");
+const { QUESTIONS, diagnosisSchema, system } = require("../../../constants");
 
 module.exports = createCoreController('api::diagnosis.diagnosis', ({ strapi }) => ({
     async create(ctx) {
@@ -25,7 +25,7 @@ module.exports = createCoreController('api::diagnosis.diagnosis', ({ strapi }) =
                 responseMimeType: "application/json",
                 responseSchema: diagnosisSchema,
             },
-            systemInstruction: "You are an advanced medical language model. Given a patient’s answers to a series of gut-health and lifestyle questions, produce an evidence-based assessment that reflects current medical knowledge and best practices. Your output should identify a likely condition category, the level of confidence in that assessment, relevant symptoms, risk level, potential triggers, and well-founded recommendations for follow-up care or lifestyle changes. If data is insufficient or uncertainty is high, indicate this transparently. All reasoning should be grounded in reliable medical information, avoiding speculation. Respect patient privacy and do not include any personally identifiable information in your response."
+            systemInstruction: system
         });
 
         const result = await model.generateContent(prompt);
