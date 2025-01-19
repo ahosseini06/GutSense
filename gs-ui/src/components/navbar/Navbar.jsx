@@ -11,6 +11,9 @@ const Navbar = () => {
   const handleGoToResult = () => {
     navigate("/diagnosis");
   };
+  const handleGoHome = () => {
+    navigate("/");
+  };
   return (
     
     <nav className={styles.header}>
@@ -19,6 +22,7 @@ const Navbar = () => {
           src={logo}
           alt="GutSense Logo"
           className={styles["logo-image"]}
+          onClick={handleGoHome}
           // style={{ width: '200px', height: '200px' }}
         />
         {/* <h1 className="logo-text">GutSense</h1> */}

@@ -4,6 +4,12 @@ import styles from "./styles/home.module.css";
 import ChatSection from "../components/ChatSection/ChatSection"; 
 import Navbar from "../components/navbar/Navbar";
 import { useNavigate } from "react-router";
+import {GoogleGenerativeAI} from "@google/generative-ai"
+
+// const genAI = new GoogleGenerativeAI({ model: "gemini-1.5-flash"})
+
+// genai.configure(api_key="GEMINI_API_KEY")
+// model = genai.GenerativeModel("gemini-1.5-flash")
 
 export default function Home() {
   const navigate = useNavigate();
