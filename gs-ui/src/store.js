@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { gutsenseApi } from './services/gutsense'
-import { rtkQueryErrorLogger } from './middlewares/error'
 import reducers from './redux/reducers';
 import rootSaga from './redux/sagas';
 import createSagaMiddleware from 'redux-saga';
@@ -37,7 +36,7 @@ export const store = configureStore({
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([gutsenseApi.middleware, rtkQueryErrorLogger, sagaMiddleware, localStorageMiddleware]),
+    getDefaultMiddleware().concat([gutsenseApi.middleware, sagaMiddleware, localStorageMiddleware]),
 
   preloadedState: reHydrateStore()
 })
