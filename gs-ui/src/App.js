@@ -7,7 +7,7 @@ import "./styles.css";
 function App() {
   return (
     <Router>
-      <div className="app-container">
+      <div>
         <Routes>
           <Route path="/" element={<DiagnosisForm />} />
           <Route path="/diagnosis" element={<DiagnosisResult />} />

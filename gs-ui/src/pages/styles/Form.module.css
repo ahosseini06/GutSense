@@ -1,0 +1,68 @@
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.title{
+    all: unset;
+    font-size: 2rem;
+    height: 2rem;
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    height: calc(100vh - 2rem - 100px);
+}
+
+.questionContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    
+}
+
+.navigateRight{
+    display: flex;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    color: darkgrey;
+    transition: all 0.3s;
+    border-radius: 10px;
+    aspect-ratio: 1;
+    width: 7rem;
+    cursor: pointer;
+}
+.navigateLeft{
+    display: flex;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    color: darkgrey;
+    transition: all 0.3s;
+    border-radius: 10px;
+    aspect-ratio: 1;
+    width: 7rem;
+    cursor: pointer;
+}
+.navigateLeft:hover{
+    color: black;
+
+    /* stretch slightly horrizontally and to the left */
+    transform: scale(1.07, 1) translateX(-0.5rem);
+}
+.navigateRight:hover{
+    color: black;
+    /* stretch slightly horrizontally */
+    transform: scale(1.07, 1);
+    transform: scale(1.07, 1) translateX(0.5rem);
+}

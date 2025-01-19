@@ -1,180 +1,318 @@
 // DiagnosisForm.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Question from "../components/question/Question";
+import styles from "./styles/Form.module.css";
+import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack } from "react-icons/io";
 
 // These are the actual questions provided.
 const QUESTIONS = [
-    "I ______ experience bloating or gas.",
-    "I ______ experience constipation or diarrhea.",
-    "I experience _______ symptoms regularly.",
-    "I ______ experience discomfort or pain after eating.",
-    "Eating spicy or fatty foods ______ worsens my symptoms.",
-    "I avoid ______ due to intolerance or discomfort.",          // Possibly multi-select
-    "I _______ feel fatigue, especially after meals.",
-    "I experience _______ inflammatory symptoms.",              // Possibly multi-select
-    "I _______ experience flare-ups of gut symptoms (e.g., diarrhea, cramping).",
-    "I ______ experience changes in my gut symptoms when under stress.",
-    "My symptoms ______ wake me up at night.",
-    "I ______ experience worsened symptoms after consuming processed or fried foods.",
-    "I experience _______ that may indicate gut microbiome imbalances.", // Possibly multi-select
-    "I ______ consume fermented foods like yogurt, kimchi, or sauerkraut.",
-    "I ______ take antibiotics.",
-    "I ______ experience unexplained fatigue or low energy.",
-    "I ______ experience sugar cravings.",
-    "I ______ experience difficulty maintaining or losing weight despite a healthy lifestyle.",
-    "I ______ notice changes in my digestion when I am anxious or stressed.",
-    "I ______ feel stressed in a typical week.",
-    "I ______ experience changes (more or less) in eating patterns during periods of high stress.",
-    "I ______ experience trouble falling or staying asleep.",
-    "I experience _______ during times of stress.",             // Possibly multi-select
-    "I ______ engage in late-night eating or snacking.",
-    "I experience _______ regularly.",                          // Possibly multi-select
-    "I ______ feel overly full or uncomfortable after eating.",
-    "I ______ experience fatigue despite eating balanced meals.",
-    "I ______ eat meals in a rush or while distracted.",
-    "I experience _______ regularly.",                          // Possibly multi-select
-    "I ______ feel hungry soon after eating meals."
-];
-
-const simpleOptions = ["Never", "Occasionally", "Frequently", "Always"];
-
-// You might want to handle multi-select for certain questions.
-// For simplicity, let's assume only one or two are multi-select to demonstrate.
-const multiSelectIndices = [5, 7, 12, 23, 24, 29];
-// Indices where the user can choose multiple items from a small set, e.g. "Gluten", "Fried foods" etc.
-const multiSelectChoices = [
-    "Acid reflux",
-    "Nausea",
-    "Gluten",
-    "Fried foods",
-    "Abdominal pain",
-    "Diarrhea",
-    "Bloating",
-    "Fatigue after meals",
-    "Frequent bloating",
-    "Sugar cravings",
-    "Weight loss without diet changes",
-    "Frequent muscle cramps",
+  {
+    id: 1,
+    text: "I ______ experience bloating or gas.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 2,
+    text: "I ______ experience constipation or diarrhea.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 3,
+    text: "I experience _______ symptoms regularly.",
+    multiSelect: true,
+    options: [
+      "Acid reflux",
+      "Nausea",
+      "Diarrhea",
+      "Bloating",
+      "Fatigue after meals",
+    ],
+  },
+  {
+    id: 4,
+    text: "I ______ experience discomfort or pain after eating.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 5,
+    text: "Eating spicy or fatty foods ______ worsens my symptoms.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 6,
+    text: "I avoid ______ due to intolerance or discomfort.",
+    multiSelect: true,
+    options: ["Gluten", "Fried foods", "Dairy", "Spicy foods"],
+  },
+  {
+    id: 7,
+    text: "I _______ feel fatigue, especially after meals.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 8,
+    text: "I experience _______ inflammatory symptoms.",
+    multiSelect: true,
+    options: ["Abdominal pain", "Diarrhea", "Bloating"],
+  },
+  {
+    id: 9,
+    text: "I _______ experience flare-ups of gut symptoms (e.g., diarrhea, cramping).",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 10,
+    text: "I ______ experience changes in my gut symptoms when under stress.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 11,
+    text: "My symptoms ______ wake me up at night.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 12,
+    text: "I ______ experience worsened symptoms after consuming processed or fried foods.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 13,
+    text: "I experience _______ that may indicate gut microbiome imbalances.",
+    multiSelect: true,
+    options: [
+      "Frequent bloating",
+      "Sugar cravings",
+      "Weight loss without diet changes",
+    ],
+  },
+  {
+    id: 14,
+    text: "I ______ consume fermented foods like yogurt, kimchi, or sauerkraut.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 15,
+    text: "I ______ take antibiotics.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 16,
+    text: "I ______ experience unexplained fatigue or low energy.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 17,
+    text: "I ______ experience sugar cravings.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 18,
+    text: "I ______ experience difficulty maintaining or losing weight despite a healthy lifestyle.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 19,
+    text: "I ______ notice changes in my digestion when I am anxious or stressed.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 20,
+    text: "I ______ feel stressed in a typical week.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 21,
+    text: "I ______ experience changes (more or less) in eating patterns during periods of high stress.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 22,
+    text: "I ______ experience trouble falling or staying asleep.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 23,
+    text: "I experience _______ during times of stress.",
+    multiSelect: true,
+    options: ["Nausea", "Abdominal pain", "Diarrhea"],
+  },
+  {
+    id: 24,
+    text: "I ______ engage in late-night eating or snacking.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 25,
+    text: "I experience _______ regularly.",
+    multiSelect: true,
+    options: [
+      "Frequent muscle cramps",
+      "Fatigue despite meals",
+      "Frequent bloating",
+    ],
+  },
+  {
+    id: 26,
+    text: "I ______ feel overly full or uncomfortable after eating.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 27,
+    text: "I ______ experience fatigue despite eating balanced meals.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 28,
+    text: "I ______ eat meals in a rush or while distracted.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
+  {
+    id: 29,
+    text: "I experience _______ regularly.",
+    multiSelect: true,
+    options: [
+      "Weight loss without diet changes",
+      "Frequent muscle cramps",
+      "Bloating",
+    ],
+  },
+  {
+    id: 30,
+    text: "I ______ feel hungry soon after eating meals.",
+    multiSelect: false,
+    options: ["Never", "Occasionally", "Frequently", "Always"],
+  },
 ];
 
 function DiagnosisForm() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    // We'll keep an array of answers, each item can be either a string or an array of strings (for multi-select).
-    const [answers, setAnswers] = useState(
-        Array(QUESTIONS.length).fill("Never") // default to "Never" for single-select
-    );
+  // We'll keep an array of answers, each item can be either a string or an array of strings (for multi-select).
+  // answer is : {questionId: int
+  //             answer: string or array of strings}
+  const [answers, setAnswers] = useState(
+    QUESTIONS.map((question) => ({
+      questionId: question.id,
+      answer: question.multiSelect ? [] : null,
+    }))
+  );
 
-    const handleSimpleSelectChange = (index, value) => {
-        const updated = [...answers];
-        updated[index] = value;
-        setAnswers(updated);
-    };
+  const [currentQuestion, setCurrentQuestion] = useState(1);
 
-    const handleMultiSelectChange = (index, choice) => {
-        // If currently a string, convert to array, or if it's an array, toggle the choice
-        const currentValue = answers[index];
-        let newValue = [];
+  const getAnswers = () => answers;
 
-        if (Array.isArray(currentValue)) {
-            // Toggle the choice
-            if (currentValue.includes(choice)) {
-                newValue = currentValue.filter((c) => c !== choice);
-            } else {
-                newValue = [...currentValue, choice];
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Post data to your endpoint
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/diagnoses`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            data: {
+              answers: answers.filter((answer) => answer.answer),
+            },
+          }),
+        }
+      );
+
+      const data = await response.json();
+      // Navigate to the diagnosis page with the response in state
+      navigate("/diagnosis", { state: data });
+    } catch (error) {
+      console.error("Error fetching diagnosis:", error);
+      // In a real app, show an error message to the user
+    }
+  };
+
+  //remove later
+  useEffect(() => {
+    console.log(answers);
+  }, [answers]);
+
+  return (
+    <div className={styles.formContainer}>
+      <h1 className={styles.title}>Does your gut need a hand?</h1>
+
+      {/*QUESTIONS.map((question) => (
+        <Question
+          setGlobalResponse={setAnswers}
+          question={question}
+          getAnswers={answers}
+        ></Question>
+      ))*/}
+      <div className={styles.body}>
+        <div className={styles.questionContainer}>
+          <div
+            className={styles.navigateLeft}
+            onClick={
+              currentQuestion > 1
+                ? () => setCurrentQuestion(currentQuestion - 1)
+                : null
             }
-        } else {
-            // If first time, create a new array with choice
-            newValue = [choice];
-        }
+          >
+            {currentQuestion > 1 && (
+              <IoIosArrowBack
+                style={{
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            )}
+          </div>
 
-        const updated = [...answers];
-        updated[index] = newValue;
-        setAnswers(updated);
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-            // Post data to your endpoint
-            const response = await fetch(
-                `${process.env.REACT_APP_API_URL}/api/diagnoses`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        data: {
-                            answers,
-                        },
-                    }),
-                }
-            );
-
-            const data = await response.json();
-            // Navigate to the diagnosis page with the response in state
-            navigate("/diagnosis", { state: data });
-        } catch (error) {
-            console.error("Error fetching diagnosis:", error);
-            // In a real app, show an error message to the user
-        }
-    };
-
-    return (
-        <div className="form-container">
-            <h1>Gut Health Questionnaire</h1>
-            <form onSubmit={handleSubmit}>
-                {QUESTIONS.map((question, index) => {
-                    const isMultiSelect = multiSelectIndices.includes(index);
-
-                    return (
-                        <div className="form-group" key={index}>
-                            <label>{question}</label>
-                            {isMultiSelect ? (
-                                <div className="multi-select-container">
-                                    {multiSelectChoices.map((choice) => (
-                                        <label key={choice} className="multi-select-option">
-                                            <input
-                                                type="checkbox"
-                                                value={choice}
-                                                onChange={() =>
-                                                    handleMultiSelectChange(index, choice)
-                                                }
-                                                checked={
-                                                    Array.isArray(answers[index]) &&
-                                                    answers[index].includes(choice)
-                                                }
-                                            />
-                                            {choice}
-                                        </label>
-                                    ))}
-                                </div>
-                            ) : (
-                                <select
-                                    value={answers[index]}
-                                    onChange={(e) =>
-                                        handleSimpleSelectChange(index, e.target.value)
-                                    }
-                                >
-                                    {simpleOptions.map((opt) => (
-                                        <option key={opt} value={opt}>
-                                            {opt}
-                                        </option>
-                                    ))}
-                                </select>
-                            )}
-                        </div>
-                    );
-                })}
-
-                <button type="submit" className="submit-button">
-                    Get Diagnosis
-                </button>
-            </form>
+          <Question
+            setGlobalResponse={setAnswers}
+            question={QUESTIONS[currentQuestion - 1]}
+            setCurrentQuestion={setCurrentQuestion}
+            getAnswers={answers}
+          ></Question>
+          <div className={styles.navigateRight}>
+            <IoIosArrowForward
+              style={{
+                width: "100%",
+                height: "100%",
+              }}
+              onClick={
+                currentQuestion < QUESTIONS.length
+                  ? () => setCurrentQuestion(currentQuestion + 1)
+                  : handleSubmit
+              }
+            />
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default DiagnosisForm;
