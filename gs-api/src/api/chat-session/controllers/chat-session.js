@@ -6,38 +6,48 @@
 
 const { createCoreController } = require('@strapi/strapi').factories;
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const { QUESTIONS, diagnosisSchema, system } = require("../../../constants");
+const { chatInstructions } = require("../../../constants");
 
 module.exports = createCoreController('api::chat-session.chat-session', ({ strapi }) => ({
     async create(ctx) {
         const response = await super.create(ctx);
 
         const messages = response.data.messages
-        console.log(messages)
-        console.log(messages[messages.length-1])
+        const diagnosis = response.data.diagnosis
+
+        if(messages.length === 0) {
+            return { messages: [
+                {
+                    parts: [{text: "Hello, I'm Gerry, your virtual health assistant. I'm here to help you with any health-related questions you may have. How can I help you today?"}],
+                    role: "model"
+                }
+            ] };
+        }
+
+        let sanitizedMessages;
+
+        if(messages[0].role === "model") {
+            sanitizedMessages = messages.slice(1);
+            if(sanitizedMessages.length === 0) {
+                return ctx.badRequest("No user message found");
+            }
+        } else {
+            sanitizedMessages = messages;
+        }
+        sanitizedMessages.pop()
+
+        const system = chatInstructions + (diagnosis ? '\nThe user has already received the following diagnosis:\n' + JSON.stringify(diagnosis) : '');
 
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({
             model: "gemini-1.5-flash",
-            systemInstruction: `You are Gerry, a friendly and fun-loving medical analyst trained in gastroenterology and digestive health assessment.
-                                \n
-                                Task: Discuss with the user to:
-                                - Identify primary symptom patterns
-                                - Categorize into relevant condition types
-                                - Assess severity and risk levels
-                                - Provide evidence-based recommendations
-                                \n
-                                Constraints:
-                                - Only use established medical criteria
-                                - Flag any concerning symptoms
-                                - Note when specialist evaluation is needed
-                                - Keep your messages short and conversational`
+            systemInstruction: system
         });
         const chat = model.startChat({
-            history: messages.slice(0, -1)
+            history: sanitizedMessages
         });
 
-        const nextMsg = await chat.sendMessage(messages[messages.length-1].parts[0].text);
+        const nextMsg = await chat.sendMessage(messages[0] ? messages[messages.length-1].parts[0].text : []);
         const newMessages = [...messages, nextMsg.response.candidates[0].content]
         return { messages: newMessages };
     }
