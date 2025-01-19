@@ -1,7 +1,7 @@
 // components/ChatSection.jsx
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './ChatSection.module.css';
-import { useAddEntityMutation } from '../../services/gutsense';
+import { useAddEntityMutation } from '../../../src/services/gutsense';
 
 const ChatSection = ({ messages, onSendMessage }) => {
   const [newMessage, setNewMessage] = useState('');
@@ -12,7 +12,7 @@ const ChatSection = ({ messages, onSendMessage }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  //addEntity({name: 'chat-session', body: {data: {messages}}});
+  // addEntity({name: 'chat-session', body: {data: {messages}}}); // await on this when calling it
 
   useEffect(() => {
     if (messages.length > 1) {
@@ -20,10 +20,10 @@ const ChatSection = ({ messages, onSendMessage }) => {
     }
   }, [messages]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (newMessage.trim()) {
-      onSendMessage(newMessage);
+      await onSendMessage(newMessage);
       setNewMessage('');
     }
   };
@@ -39,7 +39,7 @@ const ChatSection = ({ messages, onSendMessage }) => {
           <div 
             key={index} 
             className={`${styles.message} ${
-              message.sender === 'bot' ? styles.botMessage : styles.userMessage
+              message.sender === 'model' ? styles.botMessage : styles.userMessage
             }`}
           >
             {message.text}
