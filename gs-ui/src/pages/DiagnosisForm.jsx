@@ -44,7 +44,7 @@ function DiagnosisForm() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setCompletion((currentQuestion / QUESTIONS.data.length) * 100);
+    setCompletion((currentQuestion / QUESTIONS.data?.length) * 100);
   }, [currentQuestion, QUESTIONS]);
 
   const getAnswers = () => answers;
