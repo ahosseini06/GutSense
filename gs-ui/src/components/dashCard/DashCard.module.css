@@ -1,23 +1,34 @@
 .card{
     background-color: #ffffff;
-    border-radius: 10px;
+    border-radius: 40px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    margin: 1rem;
-    
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 20px;
+    padding-bottom: 30px;
     transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 50px);
+    min-width: fit-content;
+    width: calc(100% - 40px);
+    max-width: calc(100% - 40px);
+    gap: 10px;
 }
 
 .title{
     font-family: "Oswald", serif;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 300;
 }
 
 .content{
    display: flex;
    align-items: center;
-   background-color: pink;
-   justify-content: center;
+
    align-items: center;
+   word-wrap: break-word;
+   
+   font-family: "Outfit", serif;
+   color: #FF7E1D;
 }
