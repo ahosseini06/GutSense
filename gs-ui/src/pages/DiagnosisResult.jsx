@@ -160,7 +160,7 @@ function DiagnosisResult() {
                     </ul>
                   </div>
                 </DashCard>
-                <DashCard title="Improvment Plan">
+                <DashCard title="Improvement Plan">
                   <div
                     style={{
                       fontWeight: "400",
