@@ -1,7 +1,7 @@
 // Home.jsx simplified
 import React from "react";
 import styles from "./styles/home.module.css";
-import ChatSection from "../components/ChatSection/ChatSection"; 
+import ChatSection from "../components/ChatSection/ChatSection";
 import Navbar from "../components/navbar/Navbar";
 import { useNavigate } from "react-router";
 
@@ -24,8 +24,8 @@ export default function Home() {
           </h2>
 
           <p className={styles["description"]}>
-            A healthy gut can increase your metabolism, which means you burn more
-            calories even when you're not exercising.
+            A healthy gut can increase your metabolism, which means you burn
+            more calories even when you're not exercising.
           </p>
 
           <div className={styles["action-buttons"]}>
@@ -33,9 +33,13 @@ export default function Home() {
               Get a Gut Check
             </button>
 
-            <button 
+            <button
               className={styles["chat-button"]}
-              onClick={() => document.getElementById('chat-section').scrollIntoView({ behavior: 'smooth' })}
+              onClick={() =>
+                document
+                  .getElementById("chat-section")
+                  .scrollIntoView({ behavior: "smooth" })
+              }
             >
               Rant to Gerry
             </button>
@@ -44,9 +48,11 @@ export default function Home() {
       </div>
 
       <div className={styles.chatSection}>
-        <section id="chat-section" className={styles["chat-section"]}>
-          <ChatSection />
-        </section>
+        <div style={{ width: "800px" }}>
+          <section id="chat-section" className={styles["chat-section"]}>
+            <ChatSection title="Rant to Gerry" />
+          </section>
+        </div>
       </div>
     </>
   );

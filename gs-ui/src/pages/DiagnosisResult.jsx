@@ -7,6 +7,7 @@ import styles from "./styles/DiagnosisResult.module.css";
 import { GiStomach } from "react-icons/gi";
 import Navbar from "../components/navbar/Navbar";
 import { motion } from "framer-motion";
+import ChatSection from "../components/ChatSection/ChatSection";
 
 function DiagnosisResult() {
   const location = useLocation();
@@ -61,7 +62,7 @@ function DiagnosisResult() {
             initial={false}
             animate={showComponents ? { y: 0 } : { y: 10 }}
             transition={{ duration: 0.5 }}
-            style={styles.component}
+            style={{ width: "100%" }}
           >
             <div
               style={{
@@ -112,7 +113,7 @@ function DiagnosisResult() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 50 }}
               transition={{ duration: 0.3 }}
-              style={styles.component}
+              style={{ width: "100%" }}
             >
               <div
                 style={{
@@ -177,7 +178,7 @@ function DiagnosisResult() {
                   gap: "2rem",
                 }}
               >
-                <DashCard title="Treatment">
+                <DashCard title="Treatment" lg={true}>
                   <div
                     style={{
                       fontWeight: "400",
@@ -217,7 +218,7 @@ function DiagnosisResult() {
                   gap: "2rem",
                 }}
               >
-                <DashCard title="Follow-up Recommendations">
+                <DashCard title="Follow-up Recommendations" lg={true}>
                   <div
                     style={{
                       fontWeight: "400",
@@ -240,6 +241,20 @@ function DiagnosisResult() {
                   </div>
                 </DashCard>
               </div>
+            </motion.div>
+          )}
+          {showComponents && (
+            <motion.div
+              initial={{ opacity: 0, y: 80 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
+              transition={{ duration: 0.4 }}
+              style={{ width: "100%" }}
+            >
+              <ChatSection
+                title="Have more questions?"
+                diagnosis={diagnosis}
+              ></ChatSection>
             </motion.div>
           )}
         </div>
