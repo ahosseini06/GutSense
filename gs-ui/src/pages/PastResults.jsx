@@ -32,7 +32,7 @@ export default function PastResults() {
                 className={styles.resultCard}
               >
                 <h2>
-                  {new Date(result.data.date).toLocaleDateString("en-US", {
+                  {new Date(result.data?.date).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
