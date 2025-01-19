@@ -54,7 +54,15 @@ export default function Home() {
         <button className={styles["cta-button"]} onClick={handleStartForm}>
           Get tested today
         </button>
+
+        
       </main>
+      <div>
+      <button className={styles["chat-button"]}>
+          Chat
+        </button>
+      </div>
+      
     </div>
   );
 }
