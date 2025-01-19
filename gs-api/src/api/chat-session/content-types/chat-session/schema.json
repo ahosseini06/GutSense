@@ -4,7 +4,8 @@
   "info": {
     "singularName": "chat-session",
     "pluralName": "chat-sessions",
-    "displayName": "ChatSession"
+    "displayName": "ChatSession",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -12,6 +13,9 @@
   "pluginOptions": {},
   "attributes": {
     "messages": {
+      "type": "json"
+    },
+    "diagnosis": {
       "type": "json"
     }
   }
