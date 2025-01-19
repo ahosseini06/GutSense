@@ -11,6 +11,8 @@
     /* background-color: rgb(255, 248, 242); */
     background-color: #FFF4E6;
     min-height: 100vh;
+    background-image: url('../../assets/home-bg.png');
+    background-size: cover;
   }
   
   .header {
