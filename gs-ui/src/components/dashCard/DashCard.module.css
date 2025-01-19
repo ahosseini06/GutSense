@@ -48,10 +48,11 @@
 
 .content{
    display: flex;
-   align-items: center;
 
-   align-items: center;
+
+   align-items: top;
    word-wrap: break-word;
+   justify-content: space-between;
    
    font-family: "Outfit", serif;
    color: #FF7E1D;

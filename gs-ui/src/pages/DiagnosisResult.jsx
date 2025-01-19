@@ -130,7 +130,10 @@ function DiagnosisResult() {
                   {getDiagnosisImage() ? (
                     <img
                       src={getDiagnosisImage()}
-                      style={{ maxWidth: "100px", maxHeight: "100px" }}
+                      style={{
+                        maxWidth: "100px",
+                        maxHeight: "100px",
+                      }}
                     ></img>
                   ) : (
                     <GiStomach />
