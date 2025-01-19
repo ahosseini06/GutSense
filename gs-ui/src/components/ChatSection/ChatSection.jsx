@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import styles from './ChatSection.module.css';
 import { useAddEntityMutation } from '../../../src/services/gutsense';
 
-const ChatSection = () => {
+const ChatSection = ({diagnosis}) => {
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
   const [addEntity] = useAddEntityMutation();
@@ -33,7 +33,8 @@ const ChatSection = () => {
         name:"chat-sessions",
         body: {
           data: {
-            messages: updatedMessages.map(m => ({parts: [{text: m.text}], role: m.sender}))
+            messages: updatedMessages.map(m => ({parts: [{text: m.text}], role: m.sender})),
+            diagnosis: diagnosis
           }
         }
       });
