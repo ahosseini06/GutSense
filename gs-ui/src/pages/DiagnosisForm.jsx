@@ -297,17 +297,19 @@ function DiagnosisForm() {
             getAnswers={answers}
           ></Question>
           <div className={styles.navigateRight}>
-            <IoIosArrowForward
-              style={{
-                width: "100%",
-                height: "100%",
-              }}
-              onClick={
-                currentQuestion < QUESTIONS.length
-                  ? () => setCurrentQuestion(currentQuestion + 1)
-                  : handleSubmit
-              }
-            />
+            {answers[currentQuestion - 1].answer && (
+              <IoIosArrowForward
+                style={{
+                  width: "100%",
+                  height: "100%",
+                }}
+                onClick={
+                  currentQuestion < QUESTIONS.length
+                    ? () => setCurrentQuestion(currentQuestion + 1)
+                    : handleSubmit
+                }
+              />
+            )}
           </div>
         </div>
       </div>
