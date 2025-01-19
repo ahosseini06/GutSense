@@ -5,6 +5,7 @@ import Error from "../components/error/Error";
 import DashCard from "../components/dashCard/DashCard";
 import styles from "./styles/DiagnosisResult.module.css";
 import { GiStomach } from "react-icons/gi";
+import Navbar from "../components/navbar/Navbar";
 
 function DiagnosisResult() {
   const location = useLocation();
@@ -110,151 +111,154 @@ function DiagnosisResult() {
     </div>
   );*/
   return (
-    <div className={styles.page}>
-      <h1>Your Diagnosis Results</h1>
-      <button onClick={() => navigate("/")}>Go Back</button>
-      <div className={styles.container}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            height: "150px",
-            width: "100%",
-            gap: "2rem",
-          }}
-        >
-          <DashCard title="Your Gut Profile">
-            <div
-              style={{
-                display: "flex",
-                gap: "1rem",
-                fontWeight: "800",
-                fontSize: "2.5rem",
-                width: "500",
-              }}
-            >
-              {condition_category}
-              <GiStomach />
-            </div>
-          </DashCard>
+    <>
+      <Navbar style={{ width: "100%" }} />
+      <div className={styles.page}>
+        <h1>Your Diagnosis Results</h1>
 
-          <DashCard title="Severity">
-            <div
-              style={{
-                fontWeight: "800",
-                fontSize: "2.5rem",
-              }}
-            >
-              {risk_level}
-            </div>
-          </DashCard>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "2rem",
-            width: "100%",
-            height: "200px",
-          }}
-        >
-          <DashCard title="Your Triggers">
-            <div
-              style={{
-                fontWeight: "400",
-                fontSize: "2.5rem",
-              }}
-            >
-              <ul
+        <div className={styles.container}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              height: "150px",
+              width: "100%",
+              gap: "2rem",
+            }}
+          >
+            <DashCard title="Your Gut Profile">
+              <div
                 style={{
-                  marginTop: "5px",
-                  marginBottom: "0px",
-                  fontSize: "1.5rem",
+                  display: "flex",
+                  gap: "1rem",
+                  fontWeight: "800",
+                  fontSize: "2.5rem",
+                  width: "500",
                 }}
               >
-                {triggers?.map((trigger, idx) => (
-                  <li key={idx}>{trigger}</li>
-                ))}
-              </ul>
-            </div>
-          </DashCard>
-          <DashCard title="Improvment Plan">
-            <div
-              style={{
-                fontWeight: "400",
-                fontSize: "1.4rem",
-                width: "500px",
-              }}
-            >
-              Gradual and small changes can make a big difference. Implement
-              your recommendations slowly to see the best results.
-            </div>
-          </DashCard>
-        </div>
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "2rem",
-          }}
-        >
-          <DashCard title="Treatment">
-            <div
-              style={{
-                fontWeight: "400",
-                fontSize: "1.4rem",
-              }}
-            >
-              <ul
-                style={{
-                  margin: "0px",
-                  marginTop: "5px",
-                  marginBottom: "0px",
-                  fontSize: "1.5rem",
-                }}
-              >
-                {recommendations?.map((trigger, idx) => (
-                  <li key={idx}>{trigger}</li>
-                ))}
-              </ul>
-            </div>
-          </DashCard>
-        </div>
+                {condition_category}
+                <GiStomach />
+              </div>
+            </DashCard>
 
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "2rem",
-          }}
-        >
-          <DashCard title="Follow-up Recommendations">
-            <div
-              style={{
-                fontWeight: "400",
-                fontSize: "1.4rem",
-              }}
-            >
-              <ul
+            <DashCard title="Severity">
+              <div
                 style={{
-                  margin: "0px",
-                  marginTop: "5px",
-                  marginBottom: "0px",
-                  fontSize: "1.5rem",
-                  width: "700px",
+                  fontWeight: "800",
+                  fontSize: "2.5rem",
                 }}
               >
-                {follow_up?.map((trigger, idx) => (
-                  <li key={idx}>{trigger}</li>
-                ))}
-              </ul>
-            </div>
-          </DashCard>
+                {risk_level}
+              </div>
+            </DashCard>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              gap: "2rem",
+              width: "100%",
+              height: "200px",
+            }}
+          >
+            <DashCard title="Your Triggers">
+              <div
+                style={{
+                  fontWeight: "400",
+                  fontSize: "2.5rem",
+                }}
+              >
+                <ul
+                  style={{
+                    marginTop: "5px",
+                    marginBottom: "0px",
+                    fontSize: "1.5rem",
+                  }}
+                >
+                  {triggers?.map((trigger, idx) => (
+                    <li key={idx}>{trigger}</li>
+                  ))}
+                </ul>
+              </div>
+            </DashCard>
+            <DashCard title="Improvment Plan">
+              <div
+                style={{
+                  fontWeight: "400",
+                  fontSize: "1.4rem",
+                  width: "500px",
+                }}
+              >
+                Gradual and small changes can make a big difference. Implement
+                your recommendations slowly to see the best results.
+              </div>
+            </DashCard>
+          </div>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+              gap: "2rem",
+            }}
+          >
+            <DashCard title="Treatment">
+              <div
+                style={{
+                  fontWeight: "400",
+                  fontSize: "1.4rem",
+                }}
+              >
+                <ul
+                  style={{
+                    margin: "0px",
+                    marginTop: "5px",
+                    marginBottom: "0px",
+                    fontSize: "1.5rem",
+                  }}
+                >
+                  {recommendations?.map((trigger, idx) => (
+                    <li key={idx}>{trigger}</li>
+                  ))}
+                </ul>
+              </div>
+            </DashCard>
+          </div>
+
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+              gap: "2rem",
+            }}
+          >
+            <DashCard title="Follow-up Recommendations">
+              <div
+                style={{
+                  fontWeight: "400",
+                  fontSize: "1.4rem",
+                }}
+              >
+                <ul
+                  style={{
+                    margin: "0px",
+                    marginTop: "5px",
+                    marginBottom: "0px",
+                    fontSize: "1.5rem",
+                    width: "700px",
+                  }}
+                >
+                  {follow_up?.map((trigger, idx) => (
+                    <li key={idx}>{trigger}</li>
+                  ))}
+                </ul>
+              </div>
+            </DashCard>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
