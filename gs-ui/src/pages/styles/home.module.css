@@ -102,6 +102,15 @@
     color: #333;
     max-width: 500px;
   }
+
+  .action-buttons {
+    display: flex;
+    width: 450px;
+    align-items: right;
+    flex-direction: row;
+    justify-content: space-evenly;
+    
+  }
   
   .cta-button {
     background-color: #666;
@@ -120,7 +129,7 @@
   }
   
   .chat-button {
-    background-color: #fb9e56;
+    background-color: #f99141;
     color: white;
     border: none;
     border-radius: 50px;
@@ -132,6 +141,10 @@
     flex-direction: row;
     align-items: right;
     transition: background-color 0.3s ease;
+  }
+
+  .chat-button:hover {
+    background-color: #ff750b;
   }
 
   @media (max-width: 768px) {

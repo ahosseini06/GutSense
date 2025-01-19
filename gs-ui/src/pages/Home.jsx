@@ -51,16 +51,21 @@ export default function Home() {
           calories even when you're not exercising.
         </p>
 
-        <button className={styles["cta-button"]} onClick={handleStartForm}>
-          Get tested today
-        </button>
+        <div className={styles["action-buttons"]}>
+          <button className={styles["cta-button"]} onClick={handleStartForm}>
+            Get tested today
+          </button>
+
+          <button className={styles["chat-button"]}>
+            Chat with Gerry
+          </button>
+        </div>
+        
 
         
       </main>
       <div>
-      <button className={styles["chat-button"]}>
-          Chat
-        </button>
+      
       </div>
       
     </div>
