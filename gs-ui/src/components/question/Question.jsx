@@ -42,7 +42,7 @@ const Question = ({ setGlobalResponse, question, getAnswers }) => {
   return (
     <div className={styles.container}>
       <div className={styles.question}>
-        {question.text}
+        {question.displayText}
         {multiSelect && (
           <span style={{ fontWeight: "300" }}>
             {" (Select all that apply)"}

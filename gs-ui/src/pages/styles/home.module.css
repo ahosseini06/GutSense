@@ -39,6 +39,10 @@
     height: 200px;
     object-fit: contain;
   }
+
+  .logo-image:hover {
+    cursor: pointer;
+  }
   
   .logo-text {
     font-family: sans-serif;

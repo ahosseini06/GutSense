@@ -1,14 +1,18 @@
 // components/ChatSection.jsx
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './ChatSection.module.css';
+import { useAddEntityMutation } from '../../services/gutsense';
 
 const ChatSection = ({ messages, onSendMessage }) => {
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
+  const [addEntity] = useAddEntityMutation();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  //addEntity({name: 'chat-session', body: {data: {messages}}});
 
   useEffect(() => {
     if (messages.length > 1) {
