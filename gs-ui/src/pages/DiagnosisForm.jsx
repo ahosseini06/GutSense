@@ -26,10 +26,12 @@ function DiagnosisForm() {
                     answer: question.multiSelect ? [] : null,
                 }))
             )
+            setLoading(false)
         }
     }, [QUESTIONS]);
 
     const [currentQuestion, setCurrentQuestion] = useState(1);
+    const [loading, setLoading] = useState(true);
 
     const getAnswers = () => answers;
 
@@ -38,7 +40,7 @@ function DiagnosisForm() {
 
         try {
             // Post data to your endpoint
-
+            setLoading(true)
             const response = await addEntity({
                 name: "diagnoses",
                 body: {
@@ -64,53 +66,56 @@ function DiagnosisForm() {
     }, [answers]);
 
     return (
-        QUESTIONS.data && <div className={styles.formContainer}>
-            <h1 className={styles.title}>Does your gut need a hand?</h1>
+        <>
+            {QUESTIONS.data && !loading && <div className={styles.formContainer}>
+                <h1 className={styles.title}>Does your gut need a hand?</h1>
 
-            <div className={styles.body}>
-                <div className={styles.questionContainer}>
-                    <div
-                        className={styles.navigateLeft}
-                        onClick={
-                            currentQuestion > 1
-                                ? () => setCurrentQuestion(currentQuestion - 1)
-                                : null
-                        }
-                    >
-                        {currentQuestion > 1 && (
-                            <IoIosArrowBack
-                                style={{
-                                    width: "100%",
-                                    height: "100%",
-                                }}
-                            />
-                        )}
-                    </div>
+                <div className={styles.body}>
+                    <div className={styles.questionContainer}>
+                        <div
+                            className={styles.navigateLeft}
+                            onClick={
+                                currentQuestion > 1
+                                    ? () => setCurrentQuestion(currentQuestion - 1)
+                                    : null
+                            }
+                        >
+                            {currentQuestion > 1 && (
+                                <IoIosArrowBack
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                    }}
+                                />
+                            )}
+                        </div>
 
-                    <Question
-                        setGlobalResponse={setAnswers}
-                        question={QUESTIONS.data[currentQuestion - 1]}
-                        setCurrentQuestion={setCurrentQuestion}
-                        getAnswers={answers}
-                    ></Question>
-                    <div className={styles.navigateRight}>
-                        {answers[currentQuestion - 1] && answers[currentQuestion - 1].answer && (
-                            <IoIosArrowForward
-                                style={{
-                                    width: "100%",
-                                    height: "100%",
-                                }}
-                                onClick={
-                                    currentQuestion < QUESTIONS.data.length
-                                        ? () => setCurrentQuestion(currentQuestion + 1)
-                                        : handleSubmit
-                                }
-                            />
-                        )}
+                        <Question
+                            setGlobalResponse={setAnswers}
+                            question={QUESTIONS.data[currentQuestion - 1]}
+                            setCurrentQuestion={setCurrentQuestion}
+                            getAnswers={answers}
+                        ></Question>
+                        <div className={styles.navigateRight}>
+                            {answers[currentQuestion - 1] && answers[currentQuestion - 1].answer && (
+                                <IoIosArrowForward
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                    }}
+                                    onClick={
+                                        currentQuestion < QUESTIONS.data.length
+                                            ? () => setCurrentQuestion(currentQuestion + 1)
+                                            : handleSubmit
+                                    }
+                                />
+                            )}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>}
+            {loading && <div>Loading...</div>}
+        </>
     );
 }
 
