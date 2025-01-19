@@ -8,6 +8,7 @@ const { createCoreController } = require('@strapi/strapi').factories;
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { diagnosisSchema } = require("../../../constants/gemini_schema");
 const { generatePrompt } = require("../../../constants/prompt-builder");
+const { QUESTIONS } = require("../../../constants/questions");
 
 module.exports = createCoreController('api::diagnosis.diagnosis', ({ strapi }) => ({
     async create(ctx) {
@@ -32,5 +33,9 @@ module.exports = createCoreController('api::diagnosis.diagnosis', ({ strapi }) =
         const completion = result.response.candidates[0].content.parts[0].text
         const completionJSON = JSON.parse(completion);
         return completionJSON
+    },
+
+    async getQuestions(ctx) {
+        return QUESTIONS;
     }
 }))
