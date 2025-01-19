@@ -1,0 +1,18 @@
+{
+  "kind": "singleType",
+  "collectionName": "gemini_resolvers",
+  "info": {
+    "singularName": "gemini-resolver",
+    "pluralName": "gemini-resolvers",
+    "displayName": "GeminiResolver"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}
