@@ -2,6 +2,8 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Error from "../components/error/Error";
+import DashCard from "../components/dashCard/DashCard";
+import styles from "./styles/DiagnosisResult.module.css";
 
 function DiagnosisResult() {
   const location = useLocation();
@@ -9,13 +11,15 @@ function DiagnosisResult() {
 
   // The diagnosis data is passed via state from the DiagnosisForm component
   const result = location.state;
-  const diagnosis = result ? result.data: null;
-  console.log(result)
-  console.log(diagnosis)
-  const pastResults = localStorage.getItem("past-results") ? JSON.stringify(localStorage.getItem("past-results")) : null;
+  const diagnosis = result ? result.data : null;
+  console.log(result);
+  console.log(diagnosis);
+  const pastResults = localStorage.getItem("past-results")
+    ? JSON.stringify(localStorage.getItem("past-results"))
+    : null;
 
-  if(result && result.error){
-    return <Error/>;
+  if (result && result.error) {
+    return <Error />;
   }
 
   if (!diagnosis) {
@@ -23,7 +27,11 @@ function DiagnosisResult() {
       <div className="result-container">
         <h2>No diagnosis data found.</h2>
         <button onClick={() => navigate("/")}>Go Back</button>
-        {pastResults && pastResults[0] && <button onClick={() => navigate("/past-results")}>View Past Results</button>}
+        {pastResults && pastResults[0] && (
+          <button onClick={() => navigate("/past-results")}>
+            View Past Results
+          </button>
+        )}
       </div>
     );
   }
@@ -38,7 +46,7 @@ function DiagnosisResult() {
     triggers,
   } = diagnosis;
 
-  return (
+  /*return (
     <div className="result-container">
       <h1>Your Diagnosis Results</h1>
       <div className="result-card">
@@ -93,6 +101,13 @@ function DiagnosisResult() {
       <button onClick={() => navigate("/")} className="home-button">
         Back to Home
       </button>
+    </div>
+  );*/
+  return (
+    <div>
+      <DashCard title="Condition Category">
+        <div style={{ fontWeight: "800" }}>Black People</div>
+      </DashCard>
     </div>
   );
 }
