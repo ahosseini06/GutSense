@@ -9,7 +9,7 @@ import { showAlert } from '../redux/actions';
 export const gutsenseApi = createApi({
   reducerPath: 'gutsenseApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_API_DOMAIN}/api/`,
+    baseUrl: `${process.env.REACT_APP_API_URL}/api/`,
     prepareHeaders: (headers, { getState }) => {
       return headers
     },
@@ -124,6 +124,7 @@ export const gutsenseApi = createApi({
     addEntity: builder.mutation({
       query(arg) {
         const { name, body } = arg;
+        console.log("addEntity", name, body);
         return {
           url: `${pluralize(name.replace('_', '-'))}`,
           method: 'POST',

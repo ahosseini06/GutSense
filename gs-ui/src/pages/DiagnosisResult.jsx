@@ -7,7 +7,8 @@ function DiagnosisResult() {
   const navigate = useNavigate();
 
   // The diagnosis data is passed via state from the DiagnosisForm component
-  const diagnosis = location.state;
+  const diagnosis = location.state.data;
+  console.log(diagnosis);
 
   // If there is no data in state, you might want to redirect back or show an error
   if (!diagnosis) {
