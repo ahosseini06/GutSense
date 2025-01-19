@@ -8,6 +8,12 @@ import { GiStomach } from "react-icons/gi";
 import Navbar from "../components/navbar/Navbar";
 import { motion } from "framer-motion";
 import ChatSection from "../components/ChatSection/ChatSection";
+import digestion from "../assets/categoryImages/digestion.jpg";
+import inflamation from "../assets/categoryImages/inflamation.jpg";
+import microbiome from "../assets/categoryImages/microbiome.png";
+import axis from "../assets/categoryImages/axis.jpg";
+import absorption from "../assets/categoryImages/absorbtion.jpg";
+import healthy from "../assets/categoryImages/healthy.png";
 
 function DiagnosisResult() {
   const location = useLocation();
@@ -67,6 +73,29 @@ function DiagnosisResult() {
     date,
   } = diagnosis;
 
+  const getDiagnosisImage = () => {
+    if (condition_category.toLowerCase().includes("digestive")) {
+      return digestion;
+    }
+    if (condition_category.toLowerCase().includes("inflammatory")) {
+      return inflamation;
+    }
+    if (condition_category.toLowerCase().includes("microb")) {
+      return microbiome;
+    }
+    if (condition_category.toLowerCase().includes("axis")) {
+      return axis;
+    }
+    if (condition_category.toLowerCase().includes("absorption")) {
+      return absorption;
+    }
+    if (condition_category.toLowerCase().includes("healthy")) {
+      return healthy;
+    }
+    return null;
+  };
+  console.log(getDiagnosisImage());
+
   return (
     <>
       <Navbar style={{ width: "100%" }} />
@@ -98,7 +127,14 @@ function DiagnosisResult() {
                   }}
                 >
                   {condition_category}
-                  <GiStomach />
+                  {getDiagnosisImage() ? (
+                    <img
+                      src={getDiagnosisImage()}
+                      style={{ maxWidth: "100px", maxHeight: "100px" }}
+                    ></img>
+                  ) : (
+                    <GiStomach />
+                  )}
                 </div>
               </DashCard>
 

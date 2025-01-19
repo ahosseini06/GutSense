@@ -25,22 +25,24 @@ export default function PastResults() {
         >
           {pastResults &&
             pastResults[0] &&
-            pastResults.map((result, i) => (
-              <button
-                onClick={() => navigate("/diagnosis", { state: result })}
-                key={i}
-                className={styles.resultCard}
-              >
-                <h2>
-                  {new Date(result.data?.date).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </h2>
-                <p>{result.data.condition_category}</p>
-              </button>
-            ))}
+            pastResults
+              .filter((r) => r)
+              .map((result, i) => (
+                <button
+                  onClick={() => navigate("/diagnosis", { state: result })}
+                  key={i}
+                  className={styles.resultCard}
+                >
+                  <h2>
+                    {new Date(result.data?.date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </h2>
+                  <p>{result.data?.condition_category}</p>
+                </button>
+              ))}
           {!pastResults[0] && <h2>No past results found.</h2>}
         </div>
       </div>
