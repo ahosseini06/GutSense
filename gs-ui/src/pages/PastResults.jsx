@@ -13,7 +13,13 @@ export default function PastResults() {
                 key={i}
                 style={{ display: "block" }}
             >
-                <h2>Result {i + 1}</h2>
+                <h2>
+                    {new Date(result.data.date).toLocaleDateString("en-US", {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    })}
+                </h2>
                 <p>{result.data.condition_category}</p>
             </button >)}
             {!pastResults[0] && <h2>No past results found.</h2>}
