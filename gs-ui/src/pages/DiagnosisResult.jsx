@@ -1,7 +1,6 @@
 // DiagnosisResult.js
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./styles.css";
 
 function DiagnosisResult() {
   const location = useLocation();
