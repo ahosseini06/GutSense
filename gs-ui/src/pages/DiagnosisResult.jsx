@@ -48,7 +48,7 @@ function DiagnosisResult() {
             </button>
           ) : (
             <>
-              <h2>No past results found.</h2>
+              <h2 style={{ color: "white" }}>No past results found.</h2>
               <button
                 className={styles.viewBtn}
                 onClick={() => navigate("/form")}
