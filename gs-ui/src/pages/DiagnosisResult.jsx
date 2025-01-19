@@ -83,7 +83,7 @@ function DiagnosisResult() {
       </div>
 
       <button onClick={() => navigate("/")} className="home-button">
-        Back to Questionnaire
+        Back to Home
       </button>
     </div>
   );
