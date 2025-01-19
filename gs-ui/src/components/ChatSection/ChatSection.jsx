@@ -1,18 +1,21 @@
-// components/ChatSection.jsx
+// ChatSection.jsx
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './ChatSection.module.css';
 import { useAddEntityMutation } from '../../../src/services/gutsense';
 
-const ChatSection = ({ messages, onSendMessage }) => {
+const ChatSection = ({diagnosis}) => {
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
   const [addEntity] = useAddEntityMutation();
+  
+  // Move messages state here
+  const [messages, setMessages] = useState([
+    { text: "Hi! I'm Gerry. How can I help you today?", sender: "model" }
+  ]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-
-  // addEntity({name: 'chat-session', body: {data: {messages}}}); // await on this when calling it
 
   useEffect(() => {
     if (messages.length > 1) {
@@ -20,10 +23,39 @@ const ChatSection = ({ messages, onSendMessage }) => {
     }
   }, [messages]);
 
+  const handleSendMessage = async (userMessage) => {
+    // add new message to message history
+    const updatedMessages = [...messages, { text: userMessage, sender: "user" }];
+    setMessages(updatedMessages);
+
+    // try {
+      const botResponse = await addEntity({
+        name:"chat-sessions",
+        body: {
+          data: {
+            messages: updatedMessages.map(m => ({parts: [{text: m.text}], role: m.sender})),
+            diagnosis: diagnosis
+          }
+        }
+      });
+
+      setMessages(botResponse.data.messages.map(m => ({
+        text: m.parts[0].text,
+        sender: m.role
+      })));
+    // } catch (error) {
+    //   console.error('Error:', error);
+    //   setMessages(prev => [...prev, { 
+    //     text: "I apologize, but I'm having trouble responding right now. Please try again.", 
+    //     sender: "model" 
+    //   }]);
+    // }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (newMessage.trim()) {
-      await onSendMessage(newMessage);
+      await handleSendMessage(newMessage);
       setNewMessage('');
     }
   };
