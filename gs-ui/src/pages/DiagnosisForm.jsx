@@ -12,17 +12,21 @@ import { IoIosArrowBack } from "react-icons/io";
 import Navbar from "../components/navbar/Navbar";
 import Error from "../components/error/Error";
 import Loading from "../components/loading/Loading";
+import LoadingBar from "../components/loadingBar/LoadingBar";
 
 function DiagnosisForm() {
   const navigate = useNavigate();
   const [addEntity] = useAddEntityMutation();
   const QUESTIONS = useGetEntitiesQuery({ name: "questions" });
+  const [completion, setCompletion] = useState(0);
   console.log(QUESTIONS);
 
   // We'll keep an array of answers, each item can be either a string or an array of strings (for multi-select).
   // answer is : {questionId: int
   //             answer: string or array of strings}
   const [answers, setAnswers] = useState([]);
+
+  /* use effect to set completion percent based on current question */
 
   useEffect(() => {
     if (QUESTIONS.data) {
@@ -38,6 +42,10 @@ function DiagnosisForm() {
 
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setCompletion((currentQuestion / QUESTIONS.data.length) * 100);
+  }, [currentQuestion, QUESTIONS]);
 
   const getAnswers = () => answers;
 
@@ -59,7 +67,13 @@ function DiagnosisForm() {
       const data = response;
       // Navigate to the diagnosis page with the response in state
       const pastResults = localStorage.getItem("past-results");
-      localStorage.setItem("past-results", JSON.stringify([...(pastResults ? JSON.parse(pastResults) : []), data.data && data]));
+      localStorage.setItem(
+        "past-results",
+        JSON.stringify([
+          ...(pastResults ? JSON.parse(pastResults) : []),
+          data.data && data,
+        ])
+      );
       navigate("/diagnosis", { state: data });
     } catch (error) {
       console.error("Error fetching diagnosis:", error);
@@ -97,6 +111,7 @@ function DiagnosisForm() {
   return (
     <>
       <Navbar style={{ width: "100vw" }} />
+      <LoadingBar completion={completion}></LoadingBar>
       {QUESTIONS.error && <Error />}
       {QUESTIONS.data && !loading && (
         <div className={styles.formContainer}>
@@ -148,7 +163,7 @@ function DiagnosisForm() {
           </div>
         </div>
       )}
-      {loading && !QUESTIONS.error && <Loading/>}
+      {loading && !QUESTIONS.error && <Loading />}
     </>
   );
 }
