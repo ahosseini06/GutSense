@@ -5,8 +5,17 @@
     justify-content: center;
     min-height: calc(100vh - 200px);
     padding-bottom: 6rem;
-    background-color: #FFF4E6;
+    background-color: #0000004c;
     scrollbar-width: none; 
+    background-image: url(../../assets/diag-bg.png);
+    /* fit to cover */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    /* fixed */
+    background-attachment: fixed;
+    background-blend-mode: darken;
+
 }
 
 .container{
@@ -55,6 +64,7 @@
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.3s;
+    border: 3px solid #ffffff;
 }
 
 .resultCard:hover{
