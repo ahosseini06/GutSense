@@ -14,6 +14,9 @@ const Navbar = () => {
   const handleGoHome = () => {
     navigate("/");
   };
+  const handleGoToAbout = () => {
+    navigate("/about-us");
+  };
   return (
     
     <nav className={styles.header}>
@@ -33,6 +36,9 @@ const Navbar = () => {
         </div>
         <div className={styles["results_button"]} onClick={handleGoToResult}>
           <button className={styles.menuButton}>Test Results</button>
+        </div>
+        <div className={styles["about_button"]} onClick={handleGoToAbout}>
+          <button className={styles.menuButton}>About Us</button>
         </div>
       </div>
     </nav>

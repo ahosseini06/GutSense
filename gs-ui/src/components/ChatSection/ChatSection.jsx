@@ -10,7 +10,7 @@ const ChatSection = ({diagnosis}) => {
   
   // Move messages state here
   const [messages, setMessages] = useState([
-    { text: "Hi! I'm Gerry. How can I help you today?", sender: "model" }
+    { text: "Hi! I'm Gerry. How are you feeling?", sender: "model" }
   ]);
 
   const scrollToBottom = () => {
@@ -63,7 +63,7 @@ const ChatSection = ({diagnosis}) => {
   return (
     <div className={styles.chatContainer}>
       <div className={styles.chatHeader}>
-        <h3>Chat with Gerry</h3>
+        <h3>Rant to Gerry</h3>
       </div>
 
       <div className={styles.messagesContainer}>
