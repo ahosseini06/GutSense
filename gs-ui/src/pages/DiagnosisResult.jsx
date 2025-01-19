@@ -44,11 +44,16 @@ function DiagnosisResult() {
     risk_level,
     symptoms,
     triggers,
+    date
   } = diagnosis;
 
   /*return (
     <div className="result-container">
       <h1>Your Diagnosis Results</h1>
+      <div className="result-card">
+        <h2>Date</h2>
+        <p>{date}</p>
+      </div>
       <div className="result-card">
         <h2>Condition Category</h2>
         <p>{condition_category}</p>

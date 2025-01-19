@@ -1,41 +1,35 @@
-import React from "react";
+// Home.jsx
+import React, { useState } from "react";
 import styles from "./styles/home.module.css";
-import logo from "../assets/GutSense_Logo.svg";
-import { useNavigate } from "react-router-dom";
-// import { BrowserRouter } from 'react-router-dom';
-// import { useNavigate } from 'react-router-dom';
-
-// const Home = () => {
-//   return (
-//     <div className='landing_container' >
-//       {/* nav component*/}
-//       <nav className='navigation'>
-//         <div className='nav_items'>
-//         <img
-//             src="gs-ui/src/assets/GutSense_Logo.svg"
-//             alt="GutSense Logo"
-//             className="logo"
-//           />
-//           <span className="text-2xl font-bold">GutSense</span>
-
-//         </div>
-
-//       </nav>
-
-//       {/* rest of main code here */}
-//     </div>
-//   )
-// }
-
-import "./styles/home.module.css";
+import ChatSection from "../components/ChatSection/ChatSection"; 
 import Navbar from "../components/navbar/Navbar";
+import { useNavigate } from "react-router";
 
 export default function Home() {
   const navigate = useNavigate();
   const handleStartForm = () => {
     navigate("/form");
   };
+
+  // State for chat messages
+  const [messages, setMessages] = useState([
+    { text: "Hi! I'm Gerry. How can I help you today?", sender: "bot" }
+  ]);
+
+  const handleSendMessage = (message) => {
+    setMessages([...messages, { text: message, sender: "user" }]);
+    // Here you would typically handle the bot response
+    // For now, let's add a simple response
+    setTimeout(() => {
+      setMessages(prev => [...prev, { 
+        text: "Thanks for your message! I'll help you with that.", 
+        sender: "bot" 
+      }]);
+    }, 1000);
+  };
+
   return (
+    <>
     <div className={styles.container}>
       <Navbar />
 
@@ -56,20 +50,23 @@ export default function Home() {
             Get tested today
           </button>
 
-          <button className={styles["chat-button"]}>
+          <button 
+            className={styles["chat-button"]}
+            onClick={() => document.getElementById('chat-section').scrollIntoView({ behavior: 'smooth' })}
+          >
             Chat with Gerry
           </button>
         </div>
-        
-
-        
       </main>
-      <div>
-      
-      </div>
+
       
     </div>
+    <div className={styles.chatSection}>
+      <section id="chat-section" className={styles["chat-section"]}>
+      <ChatSection messages={messages} onSendMessage={handleSendMessage} />
+    </section>
+    </div>
+    
+  </>
   );
 }
-
-// export default Home
