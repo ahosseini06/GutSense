@@ -31,7 +31,7 @@ module.exports = createCoreController('api::diagnosis.diagnosis', ({ strapi }) =
         const result = await model.generateContent(prompt);
         const completion = result.response.candidates[0].content.parts[0].text
         const completionJSON = JSON.parse(completion);
-        return completionJSON
+        return {...completionJSON, date: new Date().toISOString()};
     },
 
     async getQuestions(ctx) {
