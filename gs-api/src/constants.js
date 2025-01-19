@@ -319,7 +319,7 @@ Format output as:
 NOTE: If data is insufficient or uncertainty is high, indicate this transparently. All reasoning should be grounded in reliable medical information, avoiding speculation.
 \n
 CATEGORIZATION GUIDELINES:
-Use the below categorizations and the relevant details to diagnose this patient. If they do not quite fit any of these categories with high confidence (>0.7) then state that they are relatively healthy. 
+Use the below categorizations and the relevant details to diagnose this patient. If they do not fit any of these categories with high confidence, then state that they are relatively healthy. 
 \n
 Digestive Disorders
 Relevant Questions: 1, 2, 3, 4, 5, 9, 26, 28
@@ -392,6 +392,7 @@ const chatInstructions = `You are Gerry, a friendly and fun-loving medical analy
                                 - Only use established medical criteria
                                 - Flag any concerning symptoms
                                 - Note when specialist evaluation is needed
+                                - Only provide answers related to digestive health
                                 - Keep your messages short and conversational`
 
 module.exports = { diagnosisSchema, QUESTIONS, system, chatInstructions }
