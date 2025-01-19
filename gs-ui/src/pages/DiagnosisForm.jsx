@@ -65,6 +65,23 @@ function DiagnosisForm() {
         console.log(answers);
     }, [answers]);
 
+    //listen for left and right key press
+    useEffect(() => {
+        const handleKeyPress = (e) => {
+            if (e.keyCode === 37 && currentQuestion > 1) {
+                setCurrentQuestion(currentQuestion - 1);
+            }
+            if (e.keyCode === 39 && answers[currentQuestion - 1] && answers[currentQuestion - 1].answer && currentQuestion < QUESTIONS.data.length) {
+                setCurrentQuestion(currentQuestion + 1);
+            }
+        };
+        document.addEventListener("keydown", handleKeyPress);
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyPress);
+        };
+    }, [currentQuestion, answers]);
+
     return (
         <>
             {QUESTIONS.data && !loading && <div className={styles.formContainer}>
