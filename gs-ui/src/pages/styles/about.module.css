@@ -14,4 +14,9 @@
     padding-left: 80px;
     padding-top: 40px;
     width: 700px;
+    font-family: "Outfit", serif;
+}
+
+.desc{
+    font-size: 25px;
 }
