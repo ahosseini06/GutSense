@@ -6,9 +6,7 @@
 
 const { createCoreController } = require('@strapi/strapi').factories;
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const { diagnosisSchema } = require("../../../constants/gemini_schema");
-const { generatePrompt } = require("../../../constants/prompt-builder");
-const { QUESTIONS } = require("../../../constants/questions");
+const { QUESTIONS, diagnosisSchema } = require("../../../constants");
 
 module.exports = createCoreController('api::diagnosis.diagnosis', ({ strapi }) => ({
     async create(ctx) {
@@ -16,7 +14,7 @@ module.exports = createCoreController('api::diagnosis.diagnosis', ({ strapi }) =
 
         const userAnswers = response.data.answers
 
-        const prompt = generatePrompt(userAnswers);
+        const prompt = await strapi.service('api::diagnosis.diagnosis').generatePrompt(userAnswers);
 
         console.log(prompt)
 
