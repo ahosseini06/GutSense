@@ -6,6 +6,11 @@
     width: 100%;
     padding-bottom: 5rem;
     background-color: #FFF4E6;
+    background-image: url('../../assets/quastionaire-bg.png');
+    /* always align bottoom left of the image*/
+    background-position: bottom right;
+    /* no repeat */
+    background-repeat: no-repeat;
 }
 .title{
     all: unset;
