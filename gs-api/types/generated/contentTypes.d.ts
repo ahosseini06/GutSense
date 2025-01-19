@@ -372,6 +372,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiDiagnosisDiagnosis extends Struct.CollectionTypeSchema {
   collectionName: 'diagnoses';
   info: {
+    description: '';
     displayName: 'Diagnosis';
     pluralName: 'diagnoses';
     singularName: 'diagnosis';
@@ -380,6 +381,7 @@ export interface ApiDiagnosisDiagnosis extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    answers: Schema.Attribute.JSON;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -393,7 +395,6 @@ export interface ApiDiagnosisDiagnosis extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    user_prompt: Schema.Attribute.String;
   };
 }
 
