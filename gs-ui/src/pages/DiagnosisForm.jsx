@@ -13,6 +13,7 @@ import Navbar from "../components/navbar/Navbar";
 import Error from "../components/error/Error";
 import Loading from "../components/loading/Loading";
 import LoadingBar from "../components/loadingBar/LoadingBar";
+import { FaForward } from "react-icons/fa";
 
 function DiagnosisForm() {
   const navigate = useNavigate();
@@ -145,19 +146,25 @@ function DiagnosisForm() {
               ></Question>
               <div className={styles.navigateRight}>
                 {answers[currentQuestion - 1] &&
-                  answers[currentQuestion - 1].answer && (
+                  answers[currentQuestion - 1].answer &&
+                  (currentQuestion < QUESTIONS.data.length ? (
                     <IoIosArrowForward
                       style={{
                         width: "100%",
                         height: "100%",
                       }}
-                      onClick={
-                        currentQuestion < QUESTIONS.data.length
-                          ? () => setCurrentQuestion(currentQuestion + 1)
-                          : handleSubmit
-                      }
+                      onClick={() => setCurrentQuestion(currentQuestion + 1)}
                     />
-                  )}
+                  ) : (
+                    <FaForward
+                      style={{
+                        width: "90%",
+                        height: "90%",
+                        color: "green",
+                      }}
+                      onClick={handleSubmit}
+                    />
+                  ))}
               </div>
             </div>
           </div>
