@@ -1,0 +1,23 @@
+.card{
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    margin: 1rem;
+    
+    transition: all 0.3s;
+}
+
+.title{
+    font-family: "Oswald", serif;
+    font-size: 2rem;
+    font-weight: 300;
+}
+
+.content{
+   display: flex;
+   align-items: center;
+   background-color: pink;
+   justify-content: center;
+   align-items: center;
+}
