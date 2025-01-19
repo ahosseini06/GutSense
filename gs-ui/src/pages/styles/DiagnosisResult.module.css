@@ -38,3 +38,25 @@
 .viewBtn:hover{
     transform: scale(1.05);
 }
+
+
+.resultCard{
+    all: unset;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    align-items: center;
+    justify-content: center;
+    background-color: #FF7E1D;
+    color: white;
+    font-family: "Outfit", serif;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.resultCard:hover{
+    transform: scale(1.05);
+}

@@ -30,15 +30,29 @@ function DiagnosisResult() {
 
   if (!diagnosis) {
     return (
-      <div className="result-container">
-        <h2>No diagnosis data found.</h2>
-        <button onClick={() => navigate("/")}>Go Back</button>
-        {pastResults && pastResults[0] && (
-          <button onClick={() => navigate("/past-results")}>
-            View Past Results
-          </button>
-        )}
-      </div>
+      <>
+        <Navbar style={{ width: "100%" }} />
+        <div className={styles.page}>
+          {pastResults && pastResults[0] ? (
+            <button
+              className={styles.viewBtn}
+              onClick={() => navigate("/past-results")}
+            >
+              View Past Results
+            </button>
+          ) : (
+            <>
+              <h2>No past results found.</h2>
+              <button
+                className={styles.viewBtn}
+                onClick={() => navigate("/form")}
+              >
+                Take a Diagnastic Test
+              </button>
+            </>
+          )}
+        </div>
+      </>
     );
   }
 
@@ -252,7 +266,7 @@ function DiagnosisResult() {
               style={{ width: "100%" }}
             >
               <ChatSection
-                title="Have more questions?"
+                title="Have more questions about your results?"
                 diagnosis={diagnosis}
               ></ChatSection>
             </motion.div>
