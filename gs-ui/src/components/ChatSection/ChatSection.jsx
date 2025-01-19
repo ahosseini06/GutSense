@@ -10,7 +10,7 @@ const ChatSection = ({diagnosis}) => {
   
   // Move messages state here
   const [messages, setMessages] = useState([
-    { text: "Hi! I'm Gerry. How can I help you today?", sender: "model" }
+    { text: "Hi! I'm Gerry. How are you feeling?", sender: "model" }
   ]);
 
   const scrollToBottom = () => {
