@@ -29,12 +29,12 @@ export default function Home() {
           </p>
 
           <div className={styles["action-buttons"]}>
-            <button className={styles["cta-button"]} onClick={handleStartForm}>
+            <button className={styles["chat-button"]} onClick={handleStartForm}>
               Get a Gut Check
             </button>
 
             <button
-              className={styles["chat-button"]}
+              className={styles["cta-button"]}
               onClick={() =>
                 document
                   .getElementById("chat-section")
