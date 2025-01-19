@@ -10,6 +10,7 @@ import styles from "./styles/Form.module.css";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
 import Navbar from "../components/navbar/Navbar";
+import Error from "../components/error/Error";
 
 function DiagnosisForm() {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ function DiagnosisForm() {
       const data = response;
       // Navigate to the diagnosis page with the response in state
       const pastResults = localStorage.getItem("past-results");
-      localStorage.setItem("past-results", JSON.stringify([...(pastResults ? JSON.parse(pastResults) : []), data]));
+      localStorage.setItem("past-results", JSON.stringify([...(pastResults ? JSON.parse(pastResults) : []), data.data && data]));
       navigate("/diagnosis", { state: data });
     } catch (error) {
       console.error("Error fetching diagnosis:", error);
@@ -95,6 +96,7 @@ function DiagnosisForm() {
   return (
     <>
       <Navbar style={{ width: "100vw" }} />
+      {QUESTIONS.error && <Error />}
       {QUESTIONS.data && !loading && (
         <div className={styles.formContainer}>
           <h1 className={styles.title}>Does your gut need a hand?</h1>
@@ -145,7 +147,7 @@ function DiagnosisForm() {
           </div>
         </div>
       )}
-      {loading && <div>Loading...</div>}
+      {loading && !QUESTIONS.error && <div>Loading...</div>}
     </>
   );
 }

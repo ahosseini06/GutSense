@@ -1,6 +1,7 @@
 // DiagnosisResult.js
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import Error from "../components/error/Error";
 
 function DiagnosisResult() {
   const location = useLocation();
@@ -9,9 +10,14 @@ function DiagnosisResult() {
   // The diagnosis data is passed via state from the DiagnosisForm component
   const result = location.state;
   const diagnosis = result ? result.data: null;
+  console.log(result)
+  console.log(diagnosis)
   const pastResults = localStorage.getItem("past-results") ? JSON.stringify(localStorage.getItem("past-results")) : null;
 
-  // If there is no data in state, you might want to redirect back or show an error
+  if(result && result.error){
+    return <Error/>;
+  }
+
   if (!diagnosis) {
     return (
       <div className="result-container">
