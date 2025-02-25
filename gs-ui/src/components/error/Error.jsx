@@ -11,7 +11,7 @@ const Error = () => (
     }}
   >
     <h1>GutSense is currently down for maintenance :{"("}</h1>
-    <p>We'll be back Feb 20th, 2025</p>
+    <p>We'll be back soon!</p>
     <button
       onClick={() => (window.location.href = "/")}
       className={styles.sendButton}
