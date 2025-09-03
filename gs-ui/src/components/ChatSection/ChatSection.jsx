@@ -52,6 +52,24 @@ const ChatSection = ({ diagnosis, title }) => {
     }
   }, [error]);
 
+  const formatMessage = (text) => {
+    if (!text) return text;
+    
+    // Replace *text* with <strong>text</strong> for bold
+    let formatted = text.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
+    
+    // Replace **text** with <strong>text</strong> for bold (markdown style)
+    formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    
+    // Replace _text_ with <em>text</em> for italic
+    formatted = formatted.replace(/_(.*?)_/g, '<em>$1</em>');
+    
+    // Replace line breaks with <br> tags
+    formatted = formatted.replace(/\n/g, '<br>');
+    
+    return formatted;
+  };
+
   const handleSendMessage = async (userMessage) => {
     try {
       await sendMessage(userMessage, diagnosis);
@@ -85,7 +103,11 @@ const ChatSection = ({ diagnosis, title }) => {
                 : styles.userMessage
             }`}
           >
-            {message.text}
+            {message.sender === "model" ? (
+              <div dangerouslySetInnerHTML={{ __html: formatMessage(message.text) }} />
+            ) : (
+              message.text
+            )}
           </div>
         ))}
         <div ref={messagesEndRef} />
