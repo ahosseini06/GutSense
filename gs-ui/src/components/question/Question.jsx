@@ -1,18 +1,15 @@
 import React, { useEffect } from "react";
 import styles from "./question.module.css";
 
-const Question = ({ setGlobalResponse, question, getAnswers }) => {
+const Question = ({ question, answerQuestion, currentAnswer }) => {
   const [selected, setSelected] = React.useState(
-    getAnswers.filter((answer) => answer.questionId === question.id)[0]?.answer
+    currentAnswer?.answer || (question.multiSelect ? [] : null)
   );
   const multiSelect = question.multiSelect;
 
   useEffect(() => {
-    setSelected(
-      getAnswers.filter((answer) => answer.questionId === question.id)[0]
-        ?.answer
-    );
-  }, [question, getAnswers]);
+    setSelected(currentAnswer?.answer || (question.multiSelect ? [] : null));
+  }, [question, currentAnswer]);
 
   const handleOptionClick = (option, index) => {
     let newSelected;
@@ -25,18 +22,9 @@ const Question = ({ setGlobalResponse, question, getAnswers }) => {
     } else {
       newSelected = option;
     }
-    console.log("newSelected: " + newSelected);
+    
     setSelected(newSelected);
-    const newAnswers = getAnswers.map((answer, i) => {
-      if (i === question.id - 1) {
-        return {
-          answer: newSelected,
-          questionId: question.id,
-        };
-      }
-      return answer;
-    });
-    setGlobalResponse(newAnswers);
+    answerQuestion(question.id, newSelected);
   };
 
   return (
@@ -50,21 +38,21 @@ const Question = ({ setGlobalResponse, question, getAnswers }) => {
         )}
       </div>
       <div className={styles.options}>
-        {question.options.map((option, index) => (
-          <div
-            className={
-              selected && selected.includes(option)
-                ? styles.selected
-                : styles.option
-            }
-            key={index}
-            onClick={() => {
-              handleOptionClick(option, index);
-            }}
-          >
-            {option}
-          </div>
-        ))}
+        {question.options.map((option, index) => {
+          const isSelected = multiSelect 
+            ? (selected && selected.includes(option))
+            : (selected === option);
+            
+          return (
+            <div
+              className={isSelected ? styles.selected : styles.option}
+              key={index}
+              onClick={() => handleOptionClick(option, index)}
+            >
+              {option}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

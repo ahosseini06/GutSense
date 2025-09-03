@@ -1,26 +1,44 @@
 // ChatSection.jsx
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./ChatSection.module.css";
-import { useAddEntityMutation } from "../../../src/services/gutsense";
+import { useGeminiChat } from "../../hooks";
+import { toast } from 'react-toastify';
 
 const ChatSection = ({ diagnosis, title }) => {
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef(null);
-  const [addEntity] = useAddEntityMutation();
-
-  // Move messages state here
-  const [messages, setMessages] = useState([
-    {
-      text: diagnosis
-        ? "How can I further assist you with your diagnosis?"
-        : "Hi! I'm Gerry the Gut Guru, what can I help you with?",
-      sender: "model",
-    },
-  ]);
+  const {
+    messages: chatMessages,
+    loading,
+    error,
+    initializeChat,
+    sendMessage
+  } = useGeminiChat();
+  
+  const [messages, setMessages] = useState([]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    // Initialize chat when component mounts
+    const initialMessages = initializeChat(diagnosis);
+    setMessages(initialMessages.map(m => ({
+      text: m.parts[0].text,
+      sender: m.role
+    })));
+  }, [diagnosis, initializeChat]);
+
+  useEffect(() => {
+    // Update local messages when chat messages change
+    if (chatMessages.length > 0) {
+      setMessages(chatMessages.map(m => ({
+        text: m.parts[0].text,
+        sender: m.role
+      })));
+    }
+  }, [chatMessages]);
 
   useEffect(() => {
     if (messages.length > 1) {
@@ -28,41 +46,19 @@ const ChatSection = ({ diagnosis, title }) => {
     }
   }, [messages]);
 
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
   const handleSendMessage = async (userMessage) => {
-    // add new message to message history
-    const updatedMessages = [
-      ...messages,
-      { text: userMessage, sender: "user" },
-    ];
-    setMessages(updatedMessages);
-
-    // try {
-    const botResponse = await addEntity({
-      name: "chat-sessions",
-      body: {
-        data: {
-          messages: updatedMessages.map((m) => ({
-            parts: [{ text: m.text }],
-            role: m.sender,
-          })),
-          diagnosis: diagnosis,
-        },
-      },
-    });
-
-    setMessages(
-      botResponse.data.messages.map((m) => ({
-        text: m.parts[0].text,
-        sender: m.role,
-      }))
-    );
-    // } catch (error) {
-    //   console.error('Error:', error);
-    //   setMessages(prev => [...prev, {
-    //     text: "I apologize, but I'm having trouble responding right now. Please try again.",
-    //     sender: "model"
-    //   }]);
-    // }
+    try {
+      await sendMessage(userMessage, diagnosis);
+    } catch (error) {
+      console.error('Chat error:', error);
+      // Error is already handled by the hook and toast
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -103,8 +99,12 @@ const ChatSection = ({ diagnosis, title }) => {
           placeholder="Type your message..."
           className={styles.input}
         />
-        <button type="submit" className={styles.sendButton}>
-          Send
+        <button 
+          type="submit" 
+          className={styles.sendButton}
+          disabled={loading || !newMessage.trim()}
+        >
+          {loading ? 'Sending...' : 'Send'}
         </button>
       </form>
     </div>
